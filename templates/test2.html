@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Pipe Web App</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>
+cablecores=new Array();
+cablecores[0]=["No select"]; // SELECT
+cablecores[1]=["2","3","4","5","6","7","8","10","12","16","20","24","30","36"];	// CVV
+cablecores[2]=["2","3","4","5","6","7","8","10","12","16","20","24","30","36"];	// CVVS
+cablecores[3]=["2","3","4"];			// PVC
+cablecores[4]=["2","3","4"];				// XLPE
+
+function renew1(index){
+	for(var i=0;i<cablecores[index].length;i++)
+		document.myForm.choosed_cores.options[i]=new Option(cablecores[index][i], cablecores[index][i]);	// 設定新選項
+	document.myForm.choosed_cores.length=cablecores[index].length;	// 刪除多餘的選項
+}
+
+cablesarea=new Array();
+cablesarea[0]=["No select"]; // SELECT
+cablesarea[1]=["0.5", "0.75", "1.25", "2.0"];	// CVV
+cablesarea[2]=["0.5", "0.75", "1.25", "2.0"];	// CVVS
+cablesarea[3]=["3.5", "5.5", "8", "14", "22", "30", "38", "50", "60", "80", "100", "125", "150"];		// PVC
+cablesarea[4]=["3.5", "5.5", "8", "14", "22", "30", "38", "50", "60", "80", "100", "125", "150"];		// XLPE
+
+function renew2(index){
+	for(var i=0;i<cablesarea[index].length;i++)
+		document.myForm.choosed_sectional_area.options[i]=new Option(cablesarea[index][i], cablesarea[index][i]);	// 設定新選項
+	document.myForm.choosed_sectional_area.length=cablesarea[index].length;	// 刪除多餘的選項
+}
+</script>
+</head>
+<!--#F5FFE8-->
+<body bgcolor="#F5FFE8" background="https://i.imgur.com/vHpxl64.png" style="background-repeat:no-repeat;background-attachment:fixed;background-position:right top">
+<h1>Pipe Select Form</h1>
+
+<!--<img src="https://i.imgur.com/iaUfcr5.png">-->
+
+<?php
+    // 获取select值
+    $select_value = isset($_GET['select']) ? $_GET['select'] : '';
+?>
+<form name="myForm" id="form1" action="?" method="POST">
+
+<h2>Step 1. 選擇 Cable 資料</h2>
+Cable 種類：
+<select name = "cable" onChange="renew1(this.selectedIndex); renew2(this.selectedIndex);">
+    <option value="SELECT">SELECT
+	<option value="CVV">CVV
+	<option value="CVVS">CVVS
+	<option value="PVC">PVC
+	<option value="XLPE">XLPE
+</select>
+
+芯數：
+<select name="choosed_cores">
+	<option value="">請由左方選取Cable種類
+</select>
+
+公稱截面積:
+<select name="choosed_sectional_area">
+    <option value="">請由左方選取Cable種類
+</select>
+
+<h2>Step 2. 選擇 Pipe</h2>
+
+    Pipe 種類:
+    <select id=theList name = "pipe">
+        <option value=EMT>EMT
+        <option value=PVC>PVC
+	    <option value=RSG>RSG
+	    <option value=SUS304>SUS304
+    </select>
+
+
+<h2>Step 3. 輸入數值</h2>
+
+    <label for="choosed_num_colinear">Cable 共線數選擇</label>
+    <input type="text" id="myTextBox1" name="choosed_num_colinear">
+    <br>
+    <label for="choosed_remainder">餘裕 (0<餘裕<=1)</label>
+    <input type="text" id="myTextBox1" name="choosed_remainder">
+
+<hr>
+
+<!--<button type = "submit" value = "submit">Submit</button>-->
+<input type="submit" value="Submit">
+</form>
+{% if cores%}
+<p>================Report====================&emsp;&emsp;&emsp;&emsp;&emsp;==============Detail==============</p>
+<p>Your Cable is {{Cable}}, Pipe is {{Pipe}}&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;計算出來的 總面積是 {{TOTAL_AREA}} mm&sup2</p>
+<p>選擇的 Cable芯數 {{Choosed_cores}}&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;計算出來的 內徑是 {{delimeter_cal}} mm</p>
+<p>選擇的 Cable公稱截面積 {{Choosed_sectional_area}} mm&sup2&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;根據計算選的 內徑是 {{delimeter_choosed}} mm</p>
+<p>選擇的 Cable共線數 {{Choosed_num_colinear}}&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;Pipe 管內徑列表 {{pipe_delimeter}}</p>
+<p>選擇的 餘裕 {{Choosed_remainder}}&ensp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;Pipe 公稱列表 {{pipe_nomiater}}</p>
+
+
+<p style="font-size:30px;color:red">&emsp;&emsp;&emsp;&emsp;&emsp;推薦的 Pipe 選擇是 {{Pipe}}-{{Choosed_nomiater}} (公稱) 或以上</p>
+{%endif%}
+{% if no_file_sign%}
+<p style="font-size:30px;color:red">{{Choosed_nomiater}}</p>
+{%endif%}
+{% if no_value_sign%}
+<p style="font-size:30px;color:red">{{Choosed_nomiater}}</p>
+{%endif%}
+{% if out_range_sign%}
+<p style="font-size:30px;color:red">{{Choosed_nomiater}}</p>
+{%endif%}
+{% if no_match_sign%}
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<p style="font-size:30px;color:blue">總面積 {{TOTAL_AREA}} mm&sup2，且pipe最大面積{{MAX_PIPE_AREA}}mm&sup2，因此{{Choosed_nomiater}}</p>
+{%endif%}
+</body>
+</html>

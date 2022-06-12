@@ -1,0 +1,77 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>Dropdown</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--<select name= colours method="GET" action="/">-->
+<!--    {% for colour in colours %}-->
+<!--    <option value= "{{colour}}" SELECTED>{{colour}}</option>"-->
+<!--    {% endfor %}-->
+<!--</select>-->
+
+<!--</select>-->
+<!--</body>-->
+<!--</html>-->
+
+<!DOCTYPE html>
+<html>
+<style>
+  #myTextBox1 {margin-left: 40px; }
+</style>
+<body>
+<h3>Pipe Select Form</h3>
+<div>
+  <form action="/" method="POST">
+<!--    <label for="age">Age</label>-->
+<!--    <input type="text" id="myTextBox1" name="age">-->
+<!--    <br>-->
+    <table style="border:3px #cccccc solid;" cellpadding="10" border='1'>
+        <tr><td>if CVV or CVVs 選擇芯數 (2, 3, 4, 5, 6, 7, 8, 10, 12, 16, 24, 30, 36)
+        <br>公稱截面積 (0.5, 0.75, 1.25, 2) mm&sup2</td></tr>
+        <td>if PVC or XLPE 選擇芯數 (2, 3, 4)
+        <br>公稱截面積 (3.5, 5.5, 8, 14, 22, 30, 38, 50, 60, 80, 100, 125, 150) mm&sup2</td></tr>
+    </table>
+    <label for="cable">Cable type</label>
+    <select id="myTextBox1" name="cable">
+      <option value="CVV">CVV</option>
+      <option value="CVVs">CVVs</option>
+      <option value="PVC">PVC</option>
+      <option value="XLPE">XLPE</option>
+    </select>
+    <br>
+    <label for="pipe">Pipe type</label>
+    <select id="myTextBox1" name="pipe">
+      <option value="EMT">EMT</option>
+      <option value="PVC">PVC</option>
+      <option value="RSG">RSG</option>
+      <option value="SUS304">SUS304</option>
+    </select>
+    <br>
+    <label for="choosed_cores">Cable 芯數</label>
+    <input type="text" id="myTextBox1" name="choosed_cores">
+    <br>
+    <label for="choosed_sectional_area">Cable 公稱截面積</label>
+    <input type="text" id="myTextBox1" name="choosed_sectional_area">
+    <br>
+    <label for="choosed_num_colinear">Cable 共線數選擇</label>
+    <input type="text" id="myTextBox1" name="choosed_num_colinear">
+    <br>
+    <label for="choosed_remainder">餘裕</label>
+    <input type="text" id="myTextBox1" name="choosed_remainder">
+    <br>
+    <button type = "submit" value = "submit">Submit</button>
+  </form>
+</div>
+  {%if cores%}
+  <p>Your Cable is {{Cable}}</p>
+  <p>Your Pipe is {{Pipe}}</p>
+  <p>選擇的 Cable芯數 {{Choosed_cores}}</p>
+  <p>選擇的 Cable公稱截面積 {{Choosed_sectional_area}} mm&sup2</p>
+  <p>選擇的 Cable共線數 {{Choosed_num_colinear}}</p>
+  <p>選擇的 餘裕 {{Choosed_remainder}}</p>
+  <p>推薦的 Pipe 選擇是 {{Pipe}}-{{Choosed_nomiater}}</p>
+  {%endif%}
+</body>
+</html>
